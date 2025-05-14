@@ -6,11 +6,12 @@ from app.domain.repositories.collection_repository import CollectionRepository
 from app.domain.repositories.company_repository import CompanyRepository
 from app.domain.repositories.user_repository import UserRepository
 from app.domain.entities.user import UserRole
+from app.infrastructure.utils.image_validator import ImageValidator
 
 
 class CollectionUseCases:
     def __init__(
-        self, 
+        self,
         collection_repository: CollectionRepository,
         company_repository: CompanyRepository,
         user_repository: UserRepository
@@ -28,10 +29,31 @@ class CollectionUseCases:
         zip_code: str,
         images: List[str],
     ) -> Collection:
+        # Validar imagens
+        valid_images, error_message = ImageValidator.validate_images(images)
+        if not valid_images:
+            raise ValueError(f"Imagem inválida: {error_message}")
+
+        # Validar coordenadas
+        if not (-90 <= location_latitude <= 90):
+            raise ValueError("Latitude deve estar entre -90 e 90")
+        if not (-180 <= location_longitude <= 180):
+            raise ValueError("Longitude deve estar entre -180 e 180")
+
+        # Validar CEP
+        if not zip_code or len(zip_code) < 5:
+            raise ValueError("CEP inválido")
+
+        # Validar descrição
+        if not description or len(description) < 10:
+            raise ValueError("Descrição muito curta. Mínimo de 10 caracteres.")
+        if len(description) > 1000:
+            raise ValueError("Descrição muito longa. Máximo de 1000 caracteres.")
+
         # Find the company responsible for this zip code
         company = await self.company_repository.get_by_zip_code(zip_code)
         if not company:
-            raise ValueError(f"No collection company available for zip code {zip_code}")
+            raise ValueError(f"Nenhuma empresa de coleta disponível para o CEP {zip_code}")
 
         # Create collection request
         collection = Collection(
@@ -60,17 +82,17 @@ class CollectionUseCases:
         collector = await self.user_repository.get_by_id(collector_id)
         if not collector:
             raise ValueError("Collector not found")
-        
+
         if collector.role != UserRole.COLLECTOR:
             raise ValueError("User is not a collector")
-            
+
         if collector.company_id != collection.company_id:
             raise ValueError("Collector does not belong to the company responsible for this collection")
 
         # Update collection
         collection.collector_id = collector_id
         collection.status = CollectionStatus.ASSIGNED
-        
+
         return await self.collection_repository.update(collection)
 
     async def update_collection_status(
@@ -87,7 +109,7 @@ class CollectionUseCases:
 
         # Update status
         collection.status = status
-        
+
         return await self.collection_repository.update(collection)
 
     async def get_collection_by_id(self, collection_id: UUID) -> Optional[Collection]:
