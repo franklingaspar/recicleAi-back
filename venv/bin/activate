@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/franklingaspar/fsystem/freela/projeto-back/venv"
+VIRTUAL_ENV="/Users/franklingaspar/fsystem/freela/recicleAi-back/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
