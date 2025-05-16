@@ -5,6 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.infrastructure.config import get_settings
 from app.interfaces.api.controllers import auth, users, companies, collections
 from app.interfaces.api.middlewares.rate_limiter import RateLimiter
+from app.interfaces.api.middlewares.request_logger import RequestLoggerMiddleware
+from app.interfaces.api.middlewares.jwt_utils import get_user_id_from_token
 
 settings = get_settings()
 
@@ -37,6 +39,13 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type"],
 )
 
+# Adicionar middleware de logging de requisições
+app.add_middleware(
+    RequestLoggerMiddleware,
+    exclude_paths=["/docs", "/redoc", "/openapi.json", "/favicon.ico"],
+    get_user_id=get_user_id_from_token
+)
+
 # Adicionar middleware de rate limiting
 app.add_middleware(
     RateLimiter,
@@ -60,4 +69,4 @@ async def root():
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8001)
