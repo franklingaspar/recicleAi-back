@@ -43,6 +43,7 @@ class Token(BaseModel):
     refresh_token: str
     token_type: str
     expires_in: int  # Tempo de expiração em segundos
+    user: Optional[UserResponse] = None  # Dados do usuário
 
 
 class RefreshToken(BaseModel):

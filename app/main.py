@@ -51,14 +51,14 @@ app.add_middleware(
     RateLimiter,
     rate_limit_per_minute=100,  # Limite geral de requisições por minuto
     auth_rate_limit_per_minute=5,  # Limite para endpoints de autenticação
-    auth_paths=["/token", "/refresh"],  # Endpoints de autenticação
+    auth_paths=["/api/token", "/api/refresh"],  # Endpoints de autenticação
 )
 
-# Include routers
-app.include_router(auth.router, tags=["auth"])
-app.include_router(users.router, prefix="/users", tags=["users"])
-app.include_router(companies.router, prefix="/companies", tags=["companies"])
-app.include_router(collections.router, prefix="/collections", tags=["collections"])
+# Include routers with /api prefix
+app.include_router(auth.router, prefix="/api", tags=["auth"])
+app.include_router(users.router, prefix="/api/users", tags=["users"])
+app.include_router(companies.router, prefix="/api/companies", tags=["companies"])
+app.include_router(collections.router, prefix="/api/collections", tags=["collections"])
 
 
 @app.get("/")

@@ -14,7 +14,7 @@ from app.infrastructure.database.database import get_db
 from app.infrastructure.database.models import RefreshTokenModel
 from app.infrastructure.repositories.user_repository_impl import UserRepositoryImpl
 from app.infrastructure.utils.security_logger import SecurityLogger
-from app.interfaces.api.schemas.user import Token, RefreshToken
+from app.interfaces.api.schemas.user import Token, RefreshToken, UserResponse
 
 router = APIRouter()
 settings = get_settings()
@@ -83,11 +83,24 @@ async def login_for_access_token(
         # Calcular tempo de expiração em segundos
         expires_in = int(access_token_expires.total_seconds())
 
+        # Criar objeto de resposta do usuário
+        user_response = UserResponse(
+            id=user.id,
+            username=user.username,
+            email=user.email,
+            role=user.role,
+            created_at=user.created_at,
+            updated_at=user.updated_at,
+            company_id=user.company_id,
+            profile_type=user.profile_type,
+        )
+
         return {
             "access_token": access_token,
             "refresh_token": refresh_token,
             "token_type": "bearer",
-            "expires_in": expires_in
+            "expires_in": expires_in,
+            "user": user_response
         }
     except Exception as e:
         # Registrar erro inesperado
@@ -188,11 +201,24 @@ async def refresh_access_token(
         # Calcular tempo de expiração em segundos
         expires_in = int(access_token_expires.total_seconds())
 
+        # Criar objeto de resposta do usuário
+        user_response = UserResponse(
+            id=user.id,
+            username=user.username,
+            email=user.email,
+            role=user.role,
+            created_at=user.created_at,
+            updated_at=user.updated_at,
+            company_id=user.company_id,
+            profile_type=user.profile_type,
+        )
+
         return {
             "access_token": access_token,
             "refresh_token": new_refresh_token,
             "token_type": "bearer",
-            "expires_in": expires_in
+            "expires_in": expires_in,
+            "user": user_response
         }
     except Exception as e:
         # Registrar erro inesperado
