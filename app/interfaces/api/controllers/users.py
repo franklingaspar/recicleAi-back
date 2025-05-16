@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.application.services.auth_service import AuthService
 from app.application.use_cases.user_use_cases import UserUseCases
-from app.domain.entities.user import User, UserRole
+from app.domain.entities.user import User, UserRole, ProfileType
 from app.infrastructure.auth.jwt import get_current_admin_user, get_current_user
 from app.infrastructure.config import get_settings
 from app.infrastructure.database.database import get_db
@@ -47,6 +47,7 @@ async def create_user(
             created_at=user.created_at,
             updated_at=user.updated_at,
             company_id=user.company_id,
+            profile_type=user.profile_type,
         )
     except ValueError as e:
         raise HTTPException(
@@ -78,6 +79,7 @@ async def get_users(
             created_at=user.created_at,
             updated_at=user.updated_at,
             company_id=user.company_id,
+            profile_type=user.profile_type,
         )
         for user in users
     ]
@@ -95,6 +97,7 @@ async def get_current_user_info(
         created_at=current_user.created_at,
         updated_at=current_user.updated_at,
         company_id=current_user.company_id,
+        profile_type=current_user.profile_type,
     )
 
 
@@ -126,6 +129,7 @@ async def get_user(
         created_at=user.created_at,
         updated_at=user.updated_at,
         company_id=user.company_id,
+        profile_type=user.profile_type,
     )
 
 
@@ -171,6 +175,7 @@ async def update_user(
         created_at=updated_user.created_at,
         updated_at=updated_user.updated_at,
         company_id=updated_user.company_id,
+        profile_type=updated_user.profile_type,
     )
 
 

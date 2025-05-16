@@ -46,6 +46,12 @@ Representa um usuário do sistema com os seguintes papéis:
 - **COLLECTOR**: Coletor de resíduos
 - **REGULAR**: Usuário regular que solicita coletas
 
+E os seguintes tipos de perfil:
+- **ADMIN**: Administrador do sistema com acesso total
+- **COMPANY_OWNER**: Dono de empresa que gerencia coletores e coletas
+- **COLLECTOR**: Coletor que realiza as coletas
+- **REGULAR_USER**: Usuário regular que solicita coletas
+
 ### Company (Empresa)
 
 Representa uma empresa de coleta de resíduos que opera em determinados CEPs.

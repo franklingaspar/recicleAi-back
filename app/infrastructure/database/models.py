@@ -28,6 +28,7 @@ class UserModel(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     company_id = Column(String, ForeignKey("companies.id"), nullable=True)
+    profile_type = Column(String, nullable=True)  # ADMIN, COMPANY_OWNER, COLLECTOR, REGULAR_USER
 
     # Relationships
     company = relationship("CompanyModel", back_populates="collectors")

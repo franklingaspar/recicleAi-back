@@ -5,11 +5,11 @@ from uuid import UUID, uuid4
 
 
 class CollectionStatus(str, Enum):
-    REQUESTED = "requested"
-    ASSIGNED = "assigned"
-    IN_PROGRESS = "in_progress"
-    COMPLETED = "completed"
-    CANCELLED = "cancelled"
+    REQUESTED = "REQUESTED"
+    ASSIGNED = "ASSIGNED"
+    IN_PROGRESS = "IN_PROGRESS"
+    COMPLETED = "COMPLETED"
+    CANCELLED = "CANCELLED"
 
 
 class Collection:

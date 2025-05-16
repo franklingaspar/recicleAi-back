@@ -4,7 +4,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, EmailStr, Field
 
-from app.domain.entities.user import UserRole
+from app.domain.entities.user import UserRole, ProfileType
 
 
 class UserBase(BaseModel):
@@ -32,6 +32,7 @@ class UserResponse(UserBase):
     created_at: datetime
     updated_at: datetime
     company_id: Optional[UUID] = None
+    profile_type: Optional[ProfileType] = None
 
     class Config:
         from_attributes = True

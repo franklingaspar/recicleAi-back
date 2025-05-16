@@ -1,0 +1,665 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2023-05-15T12:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.0",
+  "resources": [
+    {
+      "_id": "req_root",
+      "parentId": "wrk_recicleai",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "url": "{{ _.baseUrl }}",
+      "name": "Root",
+      "description": "Rota raiz da API",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1684152000000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "wrk_recicleai",
+      "parentId": null,
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "name": "RecicleAI API",
+      "description": "API do sistema RecicleAI para coleta de resíduos",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "fld_auth",
+      "parentId": "wrk_recicleai",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "name": "Autenticação",
+      "description": "Rotas de autenticação",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1684152000000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_login",
+      "parentId": "fld_auth",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "url": "{{ _.baseUrl }}/auth/token",
+      "name": "Login",
+      "description": "Autenticação de usuário para obter token de acesso",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/x-www-form-urlencoded",
+        "params": [
+          {
+            "name": "username",
+            "value": "admin@example.com",
+            "description": "Email do usuário"
+          },
+          {
+            "name": "password",
+            "value": "admin123",
+            "description": "Senha do usuário"
+          }
+        ]
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1684152000000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_refresh_token",
+      "parentId": "fld_auth",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "url": "{{ _.baseUrl }}/auth/refresh",
+      "name": "Refresh Token",
+      "description": "Renovar token de acesso usando refresh token",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"refresh_token\": \"{{ _.refreshToken }}\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1684151900000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_users",
+      "parentId": "wrk_recicleai",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "name": "Usuários",
+      "description": "Rotas de gerenciamento de usuários",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1684151000000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_get_current_user",
+      "parentId": "fld_users",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "url": "{{ _.baseUrl }}/users/me",
+      "name": "Obter Usuário Atual",
+      "description": "Obter informações do usuário autenticado",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.accessToken }}"
+      },
+      "metaSortKey": -1684152000000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_users",
+      "parentId": "fld_users",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "url": "{{ _.baseUrl }}/users",
+      "name": "Listar Usuários",
+      "description": "Listar todos os usuários (apenas admin)",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.accessToken }}"
+      },
+      "metaSortKey": -1684151900000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_user",
+      "parentId": "fld_users",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "url": "{{ _.baseUrl }}/users/{{ _.userId }}",
+      "name": "Obter Usuário por ID",
+      "description": "Obter informações de um usuário específico (apenas admin)",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.accessToken }}"
+      },
+      "metaSortKey": -1684151800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_create_user",
+      "parentId": "fld_users",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "url": "{{ _.baseUrl }}/users",
+      "name": "Criar Usuário",
+      "description": "Criar um novo usuário (apenas admin)",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"username\": \"novo_usuario\",\n\t\"email\": \"novo@example.com\",\n\t\"password\": \"senha123\",\n\t\"role\": \"regular\",\n\t\"company_id\": null\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.accessToken }}"
+      },
+      "metaSortKey": -1684151700000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_update_user",
+      "parentId": "fld_users",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "url": "{{ _.baseUrl }}/users/{{ _.userId }}",
+      "name": "Atualizar Usuário",
+      "description": "Atualizar informações de um usuário (apenas admin)",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"username\": \"usuario_atualizado\",\n\t\"email\": \"atualizado@example.com\",\n\t\"password\": \"novasenha123\",\n\t\"role\": \"collector\",\n\t\"company_id\": \"{{ _.companyId }}\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.accessToken }}"
+      },
+      "metaSortKey": -1684151600000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_delete_user",
+      "parentId": "fld_users",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "url": "{{ _.baseUrl }}/users/{{ _.userId }}",
+      "name": "Excluir Usuário",
+      "description": "Excluir um usuário (apenas admin)",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.accessToken }}"
+      },
+      "metaSortKey": -1684151500000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_companies",
+      "parentId": "wrk_recicleai",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "name": "Empresas",
+      "description": "Rotas de gerenciamento de empresas",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1684150000000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_get_companies",
+      "parentId": "fld_companies",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "url": "{{ _.baseUrl }}/companies",
+      "name": "Listar Empresas",
+      "description": "Listar todas as empresas (apenas admin)",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.accessToken }}"
+      },
+      "metaSortKey": -1684152000000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_company",
+      "parentId": "fld_companies",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "url": "{{ _.baseUrl }}/companies/{{ _.companyId }}",
+      "name": "Obter Empresa por ID",
+      "description": "Obter informações de uma empresa específica (apenas admin)",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.accessToken }}"
+      },
+      "metaSortKey": -1684151900000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_create_company",
+      "parentId": "fld_companies",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "url": "{{ _.baseUrl }}/companies",
+      "name": "Criar Empresa",
+      "description": "Criar uma nova empresa (apenas admin)",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"Nova Empresa\",\n\t\"description\": \"Descrição da nova empresa\",\n\t\"zip_codes\": [\"12345-678\", \"87654-321\"]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.accessToken }}"
+      },
+      "metaSortKey": -1684151800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_update_company",
+      "parentId": "fld_companies",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "url": "{{ _.baseUrl }}/companies/{{ _.companyId }}",
+      "name": "Atualizar Empresa",
+      "description": "Atualizar informações de uma empresa (apenas admin)",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"Empresa Atualizada\",\n\t\"description\": \"Descrição atualizada\",\n\t\"zip_codes\": [\"12345-678\", \"87654-321\", \"98765-432\"]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.accessToken }}"
+      },
+      "metaSortKey": -1684151700000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_delete_company",
+      "parentId": "fld_companies",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "url": "{{ _.baseUrl }}/companies/{{ _.companyId }}",
+      "name": "Excluir Empresa",
+      "description": "Excluir uma empresa (apenas admin)",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.accessToken }}"
+      },
+      "metaSortKey": -1684151600000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_collections",
+      "parentId": "wrk_recicleai",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "name": "Coleções",
+      "description": "Rotas de gerenciamento de coleções de resíduos",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1684149000000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_get_collections",
+      "parentId": "fld_collections",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "url": "{{ _.baseUrl }}/collections",
+      "name": "Listar Coleções",
+      "description": "Listar coleções de acordo com o perfil do usuário",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.accessToken }}"
+      },
+      "metaSortKey": -1684152000000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_collection",
+      "parentId": "fld_collections",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "url": "{{ _.baseUrl }}/collections/{{ _.collectionId }}",
+      "name": "Obter Coleção por ID",
+      "description": "Obter informações de uma coleção específica",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.accessToken }}"
+      },
+      "metaSortKey": -1684151900000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_create_collection",
+      "parentId": "fld_collections",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "url": "{{ _.baseUrl }}/collections",
+      "name": "Criar Coleção",
+      "description": "Solicitar uma nova coleta de resíduos",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"description\": \"Coleta de resíduos eletrônicos\",\n\t\"location_latitude\": -23.5505,\n\t\"location_longitude\": -46.6333,\n\t\"zip_code\": \"01310-200\",\n\t\"images\": [\"https://example.com/image1.jpg\", \"https://example.com/image2.jpg\"]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.accessToken }}"
+      },
+      "metaSortKey": -1684151800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_assign_collection",
+      "parentId": "fld_collections",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "url": "{{ _.baseUrl }}/collections/{{ _.collectionId }}/assign",
+      "name": "Atribuir Coleção",
+      "description": "Atribuir uma coleção a um coletor",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"collector_id\": \"{{ _.collectorId }}\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.accessToken }}"
+      },
+      "metaSortKey": -1684151700000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_update_collection_status",
+      "parentId": "fld_collections",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "url": "{{ _.baseUrl }}/collections/{{ _.collectionId }}/status",
+      "name": "Atualizar Status da Coleção",
+      "description": "Atualizar o status de uma coleção (apenas coletor)",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"status\": \"IN_PROGRESS\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.accessToken }}"
+      },
+      "metaSortKey": -1684151600000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "env_recicleai",
+      "parentId": "wrk_recicleai",
+      "modified": 1684152000000,
+      "created": 1684152000000,
+      "name": "Base Environment",
+      "data": {
+        "baseUrl": "http://localhost:8001",
+        "accessToken": "",
+        "refreshToken": "",
+        "userId": "20e72b04-abe7-456a-8c7a-c2e2311658ec",
+        "companyId": "ec0c8f9c-1234-5678-9abc-def012345678",
+        "collectorId": "35a1c30b-5b7f-4bd4-a90b-2ef8c82b3ca6",
+        "collectionId": "c1-requested"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "baseUrl",
+          "accessToken",
+          "refreshToken",
+          "userId",
+          "companyId",
+          "collectorId",
+          "collectionId"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1684152000000,
+      "_type": "environment"
+    }
+  ]
+}
