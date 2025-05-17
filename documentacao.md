@@ -186,7 +186,7 @@ O projeto inclui scripts para facilitar a inicialização do servidor:
 ./start-prod.sh
 ```
 
-Estes scripts verificam automaticamente se a porta 8000 já está em uso e encerram processos anteriores se necessário.
+Estes scripts verificam automaticamente se a porta 8001 já está em uso e encerram processos anteriores se necessário.
 
 ### Credenciais Padrão
 
@@ -231,8 +231,8 @@ O sistema é inicializado com um usuário administrador padrão:
 ## Documentação da API
 
 A documentação interativa da API está disponível em:
-- Swagger UI: `http://127.0.0.1:8000/docs`
-- ReDoc: `http://127.0.0.1:8000/redoc`
+- Swagger UI: `http://127.0.0.1:8001/docs`
+- ReDoc: `http://127.0.0.1:8001/redoc`
 
 ## Controle de Versão
 
@@ -246,7 +246,7 @@ O projeto utiliza Git para controle de versão. O arquivo `.gitignore` está con
 ## Solução de Problemas
 
 ### Erro "Address already in use"
-Se você receber o erro "Address already in use" ao iniciar o servidor, significa que a porta 8000 já está sendo usada. Use os scripts `start.sh` ou `start-prod.sh` que lidam automaticamente com esse problema.
+Se você receber o erro "Address already in use" ao iniciar o servidor, significa que a porta 8001 já está sendo usada. Use os scripts `start.sh` ou `start-prod.sh` que lidam automaticamente com esse problema, matando qualquer processo existente na porta e reiniciando o servidor.
 
 ### Erro "Credenciais inválidas"
 Se você receber o erro "Credenciais inválidas" ao tentar fazer login, verifique:
