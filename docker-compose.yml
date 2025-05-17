@@ -2,7 +2,9 @@ version: '3.8'
 
 services:
   api:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: recicleai-api
     restart: always
     ports:
@@ -13,6 +15,7 @@ services:
       - ACCESS_TOKEN_EXPIRE_MINUTES=30
       - REFRESH_TOKEN_EXPIRE_DAYS=7
       - APP_ENV=production
+      - PYTHONPATH=/app
     volumes:
       - ./data:/app/data
     healthcheck:
